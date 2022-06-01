@@ -2,7 +2,7 @@ import express, { json } from 'express';
 import 'express-async-errors';
 import cors from 'cors';
 import { PORT } from './config';
-import { handleError } from './utils/handleErrors';
+import { handleError } from './utils/handle-errors';
 import { HomeRouter } from './routes/home-router';
 import { StarWarsRouter } from './routes/starwars-router';
 import { WeatherRouter } from './routes/weather-router';
