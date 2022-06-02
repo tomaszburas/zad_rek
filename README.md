@@ -1,4 +1,4 @@
-###Tech 
+### Tech 
 - typescript
 - node + express
 - mysql
@@ -6,8 +6,8 @@
 ### Installation
 1. `git clone https://github.com/tomaszburas/zad_rek.git`
 2. import `zad_rek.sql` file to your mysql client
-3. install dependencies `npm i`
-4. configure the project in `config.ts`
+3. install dependencies with the command `npm i`
+4. configure the project in `config.ts` file
 5. run the project with the command `npm start`
 
 ### Authentication
