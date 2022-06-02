@@ -20,7 +20,7 @@ export class UserRecord implements UserEntity {
       throw new ValidationError('Incorrect email.');
     }
 
-    if (!obj.password) {
+    if (!obj.password || obj.password.length > 72) {
       throw new ValidationError('Password cannot be empty and longer than 30 characters.');
     }
 
