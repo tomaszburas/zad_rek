@@ -5,7 +5,6 @@ interface Error {
 }
 
 export class ValidationError extends Error {}
-export class AuthError extends Error {}
 
 export const handleError = (err: Error, req: Request, res: Response, next: NextFunction) => {
   // SQL DUPLICATE EMAIL ERROR
@@ -13,14 +12,6 @@ export const handleError = (err: Error, req: Request, res: Response, next: NextF
     res.status(400).json({
       success: false,
       message: 'Given email already exist in database. Please enter a new email.',
-    });
-    return;
-  }
-  // AUTH ERROR
-  if (err instanceof AuthError) {
-    res.status(401).json({
-      success: false,
-      message: 'User is not authenticated.',
     });
     return;
   }
