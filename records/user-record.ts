@@ -4,19 +4,24 @@ import { NewUserEntity, UserEntity, UserRecordResults } from '../types';
 import { pool } from '../utils/db';
 import { ValidationError } from '../utils/handle-errors';
 import { validationPassword } from '../utils/validation-password';
+import { validationEmail } from '../utils/validation-email';
 
 export class UserRecord implements UserEntity {
   id: string;
   password: string;
-  username: string;
+  email: string;
 
   constructor(obj: NewUserEntity) {
-    if (!obj.username || obj.username.length > 25) {
-      throw new ValidationError('Username cannot be empty and cannot be longer than 25 characters.');
+    if (!obj.email || obj.email.length > 254) {
+      throw new ValidationError('Email cannot be empty and cannot be longer than 254 characters.');
+    }
+
+    if (!validationEmail(obj.email)) {
+      throw new ValidationError('Incorrect email.');
     }
 
     if (!obj.password) {
-      throw new ValidationError('Password cannot be empty.');
+      throw new ValidationError('Password cannot be empty and longer than 30 characters.');
     }
 
     if (!validationPassword(obj.password)) {
@@ -26,7 +31,7 @@ export class UserRecord implements UserEntity {
     }
 
     this.id = obj.id;
-    this.username = obj.username;
+    this.email = obj.email;
     this.password = obj.password;
   }
 
@@ -35,16 +40,16 @@ export class UserRecord implements UserEntity {
 
     this.password = await bcrypt.hash(this.password, 10);
 
-    await pool.execute('INSERT INTO `users` VALUES (:id, :username, :password)', {
+    await pool.execute('INSERT INTO `users` VALUES (:id, :email, :password)', {
       id: this.id,
-      username: this.username,
+      email: this.email,
       password: this.password,
     });
   }
 
   async login(): Promise<UserRecord> {
-    const [user] = (await pool.execute('SELECT * FROM `users` WHERE `username` = :username', {
-      username: this.username,
+    const [user] = (await pool.execute('SELECT * FROM `users` WHERE `email` = :email', {
+      email: this.email,
     })) as UserRecordResults;
     if (!user[0]) throw new ValidationError('User not found');
 

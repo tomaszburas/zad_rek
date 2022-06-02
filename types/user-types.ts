@@ -2,7 +2,7 @@ import { FieldPacket } from 'mysql2';
 
 export interface UserEntity {
     id: string;
-    username: string;
+    email: string;
     password: string;
 }
 

@@ -12,10 +12,10 @@ export class HomeController {
   }
 
   static async register(req: Request, res: Response) {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     const user = new UserRecord({
-      username,
+      email,
       password,
     });
 
@@ -25,10 +25,10 @@ export class HomeController {
   }
 
   static async login(req: Request, res: Response) {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     const user = new UserRecord({
-      username,
+      email,
       password,
     });
 
@@ -36,7 +36,7 @@ export class HomeController {
 
     const payload = {
       id: loggedUser.id,
-      username: loggedUser.username,
+      username: loggedUser.email,
     };
 
     const token = jwt.sign(payload, ACCESS_TOKEN, { expiresIn: '1d' });

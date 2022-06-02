@@ -8,11 +8,11 @@ export class ValidationError extends Error {}
 export class AuthError extends Error {}
 
 export const handleError = (err: Error, req: Request, res: Response, next: NextFunction) => {
-  // SQL DUPLICATE USERNAME ERROR
+  // SQL DUPLICATE EMAIL ERROR
   if (err.errno === 1062) {
     res.status(400).json({
       success: false,
-      message: 'Given username already exist in database. Please enter a new username.',
+      message: 'Given email already exist in database. Please enter a new email.',
     });
     return;
   }
