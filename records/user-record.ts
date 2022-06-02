@@ -53,4 +53,12 @@ export class UserRecord implements UserEntity {
 
         return new UserRecord(user[0]);
     }
+
+    static async getById(id: string): Promise<UserRecord | null> {
+        const [user] = (await pool.execute('SELECT * FROM `users` WHERE `id` = :id', {
+            id: id,
+        })) as UserRecordResults;
+
+        return user.length ? new UserRecord(user[0]) : null;
+    }
 }

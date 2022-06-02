@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 import { ACCESS_TOKEN } from '../config';
 import { UserRecord } from '../records/user-record';
 
@@ -31,20 +32,20 @@ export class HomeController {
             password,
         });
 
-        await user.login();
+        const loggedUser = await user.login();
 
         const payload = {
-            id: user.id,
-            name: user.username,
+            id: loggedUser.id,
+            username: loggedUser.username,
         };
 
-        // const token = jwt.sign(payload, ACCESS_TOKEN, { expiresIn: '1d' });
+        const token = jwt.sign(payload, ACCESS_TOKEN, { expiresIn: '1d' });
 
         res.status(200)
-            // .cookie('access_token', token, {
-            //     maxAge: 24 * 60 * 60 * 1000,
-            //     httpOnly: true,
-            // })
+            .cookie('access_token', token, {
+                maxAge: 24 * 60 * 60 * 1000,
+                httpOnly: true,
+            })
             .json({
                 success: true,
             });
