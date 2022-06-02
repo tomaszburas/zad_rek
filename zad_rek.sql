@@ -23,7 +23,7 @@ USE `zad_rek`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(254) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(72) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`email`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
