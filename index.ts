@@ -6,6 +6,7 @@ import { handleError } from './utils/handle-errors';
 import { HomeRouter } from './routes/home-router';
 import { StarWarsRouter } from './routes/starwars-router';
 import { WeatherRouter } from './routes/weather-router';
+import { setWeather } from './utils/set-weather';
 
 const app = express();
 
@@ -15,6 +16,8 @@ app.use(json());
 app.use('/', HomeRouter);
 app.use('/starwars', StarWarsRouter);
 app.use('/weather', WeatherRouter);
+
+setWeather();
 
 app.use(handleError);
 app.listen(PORT, () => `Server listening on port ${PORT}`);
