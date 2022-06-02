@@ -33,7 +33,7 @@ export class StarWarsController {
 
         res.status(200).json({
             success: true,
-            people: filtered ? filtered : [],
+            people: filtered,
         });
     }
 }
