@@ -10,14 +10,14 @@ import { StarWarsRouter } from './routes/starwars-router';
 import { WeatherRouter } from './routes/weather-router';
 import { setWeather } from './utils/set-weather';
 
+import './utils/passport';
+
 const app = express();
 
 app.use(cors());
 app.use(json());
 app.use(cookieParser());
 app.use(passport.initialize());
-
-import './utils/passport';
 
 app.use('/', HomeRouter);
 app.use('/starwars', StarWarsRouter);

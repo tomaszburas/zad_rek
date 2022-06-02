@@ -4,4 +4,5 @@ import { authenticate } from '../utils/authenticate';
 
 export const WeatherRouter = Router();
 
-WeatherRouter.get('/get', authenticate, WeatherController.get);
+WeatherRouter
+  .get('/get', authenticate, WeatherController.get);

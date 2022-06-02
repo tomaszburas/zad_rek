@@ -4,8 +4,6 @@ import { authenticate } from '../utils/authenticate';
 
 export const StarWarsRouter = Router();
 
-StarWarsRouter.get('/getall', StarWarsController.getAll).get(
-    '/getfiltered',
-    authenticate,
-    StarWarsController.getFiltered
-);
+StarWarsRouter
+  .get('/getall', StarWarsController.getAll)
+  .get('/getfiltered', authenticate, StarWarsController.getFiltered);

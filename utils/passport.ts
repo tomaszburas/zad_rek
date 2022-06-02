@@ -6,6 +6,7 @@ import { ACCESS_TOKEN } from '../config';
 import { UserRecord } from '../records/user-record';
 
 declare module 'express' {
+    // eslint-disable-next-line no-shadow
     export interface Request {
         user: UserEntity;
     }
@@ -17,21 +18,22 @@ interface Options {
 }
 
 const cookieExtractor = (req: Request): string | null => {
-    let token = null;
-    if (req && req.cookies) token = req.cookies['access_token'];
-    return token;
+  let token = null;
+  if (req && req.cookies) token = req.cookies.access_token;
+  return token;
 };
 
 const JwtStrategy = passportJwt.Strategy;
 
 const opts: Options = {
-    jwtFromRequest: cookieExtractor,
-    secretOrKey: ACCESS_TOKEN,
+  jwtFromRequest: cookieExtractor,
+  secretOrKey: ACCESS_TOKEN,
 };
 
 passport.use(
-    new JwtStrategy(opts, async (jwt_payload, done) => {
-        const user = await UserRecord.getById(jwt_payload.id);
-        user ? done(null, user) : done(null, false);
-    })
+  new JwtStrategy(opts, async (jwtPayload, done) => {
+    const user = await UserRecord.getById(jwtPayload.id);
+    // eslint-disable-next-line no-unused-expressions
+    user ? done(null, user) : done(null, false);
+  }),
 );

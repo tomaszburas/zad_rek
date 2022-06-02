@@ -3,37 +3,38 @@ import { getAllPeopleSwapi } from '../utils/get-all-people-swapi';
 import { ValidationError } from '../utils/handle-errors';
 
 export class StarWarsController {
-    static async getAll(req: Request, res: Response) {
-        res.status(200).json({
-            success: true,
-            people: await getAllPeopleSwapi(),
-        });
+  static async getAll(req: Request, res: Response) {
+    res.status(200).json({
+      success: true,
+      people: await getAllPeopleSwapi(),
+    });
+  }
+
+  static async getFiltered(req: Request, res: Response) {
+    if (!req.query) {
+      throw new ValidationError('Query is empty.');
     }
 
-    static async getFiltered(req: Request, res: Response) {
-        if (!req.query) {
-            throw new ValidationError('Query is empty.');
+    const queries = Object.entries(req.query);
+
+    if (!queries.length) throw new ValidationError('Query is empty.');
+
+    const people = await getAllPeopleSwapi();
+
+    const filtered = people.filter((person) => {
+      let result = true;
+      queries.forEach(([key, value]) => {
+        if (person[key].toLowerCase() !== value) {
+          result = false;
         }
+      });
 
-        const queries = Object.entries(req.query);
+      return result ? people : false;
+    });
 
-        const people = await getAllPeopleSwapi();
-
-        const filtered = people.filter((person) => {
-            let result = true;
-            queries.map(([key, value]) => {
-                if (person[key] !== value) {
-                    result = false;
-                    return;
-                }
-            });
-
-            return result ? people : false;
-        });
-
-        res.status(200).json({
-            success: true,
-            people: filtered,
-        });
-    }
+    res.status(200).json({
+      success: !!filtered,
+      people: filtered,
+    });
+  }
 }
