@@ -31,7 +31,6 @@ const opts: Options = {
 
 passport.use(
     new JwtStrategy(opts, async (jwt_payload, done) => {
-        console.log(jwt_payload.id);
         const user = await UserRecord.getById(jwt_payload.id);
         user ? done(null, user) : done(null, false);
     })
