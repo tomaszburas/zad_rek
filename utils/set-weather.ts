@@ -2,6 +2,7 @@ import fetch from 'node-fetch';
 import { WEATHER_API_KEY } from '../config';
 import { WeatherRecord } from '../records/weather-record';
 
+// Kielce
 const lat = 50.8660773;
 const lon = 20.6285677;
 
