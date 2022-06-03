@@ -21,7 +21,7 @@ export class UserRecord implements UserEntity {
     }
 
     if (!obj.password || obj.password.length > 72) {
-      throw new ValidationError('Password cannot be empty and longer than 30 characters.');
+      throw new ValidationError('Password cannot be empty and longer than 72 characters.');
     }
 
     if (!validationPassword(obj.password)) {
