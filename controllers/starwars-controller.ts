@@ -17,8 +17,6 @@ export class StarWarsController {
 
     const queries = Object.entries(req.query);
 
-    if (!queries.length) throw new ValidationError('Query is empty.');
-
     const people = await getAllPeopleSwapi();
 
     const filtered = people.filter((person) => {
