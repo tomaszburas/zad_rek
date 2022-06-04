@@ -11,9 +11,7 @@ export class StarWarsController {
   }
 
   static async getFiltered(req: Request, res: Response) {
-    if (!req.query) {
-      throw new ValidationError('Query is empty.');
-    }
+    if (Object.keys(req.query).length === 0) throw new ValidationError('Query is empty.');
 
     const queries = Object.entries(req.query);
 
